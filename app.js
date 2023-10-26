@@ -7,7 +7,7 @@ import userRouter from "./routes/user.js"
 config()
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
-console.log(__dirname)
+
 const app = express()
 app.use(express.json())
 app.use(express.urlencoded({extended:true}))

@@ -6,9 +6,8 @@ class userControllers {
   static async createUser(req, res) {
     try {
       const { email, motDePasse, ...body } = req.body;
-      console.log(req.body);
       const exist = User.findOne({ email });
-      console.log(exist);
+
       if (exist) {
         return res
           .status(404)
