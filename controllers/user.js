@@ -18,7 +18,7 @@ class userControllers {
       const newUser = await User.create({
         email,
         motDePasse: HashMdp,
-        ...body, 
+        ...body,
       });
       if (!newUser) {
         return res
@@ -56,7 +56,7 @@ class userControllers {
         return res
           .status(404)
           .json({ statut: false, message: "utilisateur non trouvé" });
-      await User.deleteOne(id);
+      await User.deleteOne({ _id: id });
       res.status(200).json({ statut: true, message: "supprimé avec succès" });
     } catch (e) {
       res.status(500).json({ statut: false, message: e.message });
@@ -92,21 +92,26 @@ class userControllers {
   static async login(req, res) {
     try {
       const { email, motDePasse } = req.body;
-    
+
       const user = await User.findOne({ email });
-    
+
       if (user) {
         const passwordMatch = await compare(motDePasse, user.motDePasse);
         if (passwordMatch) {
           res.status(200).json({ statut: true, message: user });
         } else {
-          res.status(401).json({ statut: false, message: "Invalid email or password" });
+          res
+            .status(401)
+            .json({ statut: false, message: "Invalid email or password" });
         }
       } else {
-        res.status(401).json({ statut: false, message: "Invalid email or password" });
+        res
+          .status(401)
+          .json({ statut: false, message: "Invalid email or password" });
       }
     } catch (e) {
       res.status(500).json({ statut: false, message: e.message });
     }
-}}
+  }
+}
 export default userControllers;
