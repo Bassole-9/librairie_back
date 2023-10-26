@@ -6,7 +6,7 @@ class userControllers {
   static async createUser(req, res) {
     try {
       const { email, motDePasse, ...body } = req.body;
-      const exist = User.findOne({ email });
+      const exist = await User.findOne({ email });
 
       if (exist) {
         return res
